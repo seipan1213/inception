@@ -1,23 +1,30 @@
-version: '3.1'
+version: '1.0'
 
 services:
-
-  wordpress:
-    image: wordpress
+  nginx:
+    image: sehattor/nginx:v1
     restart: always
     ports:
-      - 8080:80
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: exampleuser
-      WORDPRESS_DB_PASSWORD: examplepass
-      WORDPRESS_DB_NAME: exampledb
+      - 443:443
 
-  db:
-    image: mysql:5.7
+  wordpress:
+    image: sehattor/wordpress:v1
     restart: always
+    ports:
+      - 9000:9000
     environment:
-      MYSQL_DATABASE: exampledb
-      MYSQL_USER: exampleuser
-      MYSQL_PASSWORD: examplepass
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      WORDPRESS_DB_HOST: inception
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: admin
+      WORDPRESS_DB_NAME: wordpress
+
+  mariadb:
+    image: sehattor/mariadb:v1
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: inception
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_RANDOM_ROOT_PASSWORD: 'admin'
