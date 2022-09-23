@@ -24,3 +24,5 @@ RUN chmod 755 /usr/local/bin/setup.sh
 RUN chmod 666 /var/log/mysqld.log
 
 ENTRYPOINT ["/usr/local/bin/setup.sh"]
+
+EXPOSE 3306
