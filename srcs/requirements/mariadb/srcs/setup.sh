@@ -1,8 +1,4 @@
 #!/bin/sh
-export MYSQL_ROOT_PASS=toor
-export WP_DB_NAME=hogeDB
-export WP_DB_USER=hogeUser
-export WP_DB_USER_PASS=hogePass
 
 /etc/init.d/mariadb setup
 rc-status

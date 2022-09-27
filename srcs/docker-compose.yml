@@ -1,30 +1,49 @@
-version: '1.0'
+version: '3'
 
 services:
   nginx:
-    image: sehattor/nginx:v1
+    build: requirements/nginx/
     restart: always
     ports:
       - 443:443
+    networks:
+      - frontend
 
   wordpress:
-    image: sehattor/wordpress:v1
+    build: requirements/wordpress/
     restart: always
     ports:
       - 9000:9000
+    networks:
+      - frontend
+      - backend
     environment:
-      WORDPRESS_DB_HOST: inception
-      WORDPRESS_DB_USER: admin
-      WORDPRESS_DB_PASSWORD: admin
-      WORDPRESS_DB_NAME: wordpress
+      DOMAIN_NAME: ${DOMAIN_NAME}
+      WP_TITLE: ${WP_TITLE}
+      WP_DB_HOST: ${WP_DB_HOST}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_USER_EMAIL: ${WP_ADMIN_USER_EMAIL}
+      WP_ADMIN_USER_PASS: ${WP_ADMIN_USER_PASS}
+      WP_USER: ${WP_USER}
+      WP_USER_EMAIL: ${WP_USER_EMAIL}
+      WP_USER_PASS: ${WP_USER_PASS}
+      WP_DB_NAME: ${WP_DB_NAME}
+      WP_DB_USER: ${WP_DB_USER}
+      WP_DB_PASS: ${WP_DB_PASS}
 
   mariadb:
-    image: sehattor/mariadb:v1
+    build: requirements/mariadb/
     restart: always
     ports:
       - 3306:3306
+    networks:
+      - backend
     environment:
-      MYSQL_DATABASE: inception
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_RANDOM_ROOT_PASSWORD: 'admin'
+      WP_DB_NAME: ${WP_DB_NAME}
+      WP_DB_USER: ${WP_DB_USER}
+      WP_DB_PASS: ${WP_DB_PASS}
+      MYSQL_ROOT_PASS: ${MYSQL_ROOT_PASS}
+
+networks:
+  frontend:
+  backend:

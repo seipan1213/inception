@@ -7,20 +7,15 @@ RUN apk --no-cache add \
 	mysql mysql-client
 
 WORKDIR /
-RUN curl https://ja.wordpress.org/wordpress-6.0-ja.tar.gz > /tmp/wordpress-ja.tar.gz\
-	&& tar -xzf /tmp/wordpress-ja.tar.gz -C /var/www/ \
-	&& rm -f /tmp/wordpress-ja.tar.gz
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \
 	&& mv wp-cli.phar /usr/local/bin/wp
 
-WORKDIR /
+COPY srcs/setup.sh /usr/local/bin/
 
-COPY srcs/setup.sh /
+RUN chmod 755 /usr/local/bin/setup.sh
 
-RUN chmod 755 /setup.sh
-
-ENTRYPOINT ["/setup.sh"]
+ENTRYPOINT ["/usr/local/bin/setup.sh"]
 
 EXPOSE 9000
