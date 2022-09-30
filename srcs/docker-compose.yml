@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nginx:
+    container_name: nginx
     build: requirements/nginx/
     restart: always
     ports:
@@ -10,6 +11,7 @@ services:
       - frontend
 
   wordpress:
+    container_name: wordpress
     build: requirements/wordpress/
     restart: always
     ports:
@@ -32,6 +34,7 @@ services:
       WP_DB_PASS: ${WP_DB_PASS}
 
   mariadb:
+    container_name: mariadb
     build: requirements/mariadb/
     restart: always
     ports:

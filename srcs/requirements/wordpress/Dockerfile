@@ -16,6 +16,10 @@ COPY srcs/setup.sh /usr/local/bin/
 
 RUN chmod 755 /usr/local/bin/setup.sh
 
+RUN mkdir -p var/www/html
+
+WORKDIR /var/www/html/
+
 ENTRYPOINT ["/usr/local/bin/setup.sh"]
 
 EXPOSE 9000

@@ -15,11 +15,12 @@ RUN	openssl genrsa 2048 > ./private/server.key \
 WORKDIR /
 
 COPY srcs/nginx.conf etc/nginx/
-COPY srcs/setup.sh /
+COPY srcs/wp.conf etc/nginx/conf.d
 
+COPY srcs/setup.sh /usr/local/bin/
 
-RUN chmod 755 /setup.sh
+RUN chmod 755 /usr/local/bin/setup.sh
 
-ENTRYPOINT ["/setup.sh"]
+ENTRYPOINT ["/usr/local/bin/setup.sh"]
 
 EXPOSE 443
