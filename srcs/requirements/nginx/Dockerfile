@@ -15,7 +15,7 @@ RUN	openssl genrsa 2048 > ./private/server.key \
 WORKDIR /
 
 COPY srcs/nginx.conf etc/nginx/
-COPY srcs/wp.conf etc/nginx/conf.d
+COPY srcs/wp.conf etc/nginx/conf.d/
 
 COPY srcs/setup.sh /usr/local/bin/
 

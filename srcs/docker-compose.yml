@@ -4,16 +4,22 @@ services:
   nginx:
     container_name: nginx
     build: requirements/nginx/
-    restart: always
+    depends_on:
+      - wordpress
+    restart: on-failure
     ports:
       - 443:443
     networks:
       - frontend
+    volumes:
+      - wordpress_data:/var/www/html/
 
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/
-    restart: always
+    depends_on:
+      - mariadb
+    restart: on-failure
     ports:
       - 9000:9000
     networks:
@@ -28,15 +34,16 @@ services:
       WP_ADMIN_USER_PASS: ${WP_ADMIN_USER_PASS}
       WP_USER: ${WP_USER}
       WP_USER_EMAIL: ${WP_USER_EMAIL}
-      WP_USER_PASS: ${WP_USER_PASS}
       WP_DB_NAME: ${WP_DB_NAME}
       WP_DB_USER: ${WP_DB_USER}
       WP_DB_PASS: ${WP_DB_PASS}
+    volumes:
+      - wordpress_data:/var/www/html/
 
   mariadb:
     container_name: mariadb
     build: requirements/mariadb/
-    restart: always
+    restart: on-failure
     ports:
       - 3306:3306
     networks:
@@ -50,3 +57,7 @@ services:
 networks:
   frontend:
   backend:
+
+
+volumes:
+  wordpress_data:
